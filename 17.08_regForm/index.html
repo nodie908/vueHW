@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+
+    <div id="reg">
+        <form @submit.prevent="registerUser">
+            <h1>Форма регистрации</h1>
+            <label for="name">Имя</label>
+            <input v-model="user.name" type="text" name="name" required><br>
+            <label for="surname">Фамилия</label>
+            <input v-model="user.surname" type="text" name="surname" required><br>
+            <label for="mail">Эл. почта</label>
+            <input v-model="user.mail" type="email" name="mail" required><br>
+            <label for="passw">Пароль</label>
+            <input v-model="user.passw" type="text" name="passw" required><br>
+            <label for="confirm">Подтвердите пароль</label>
+            <input v-model="confirm" type="text" name="confirm" required><br>
+            <input type="submit" value="Зарегестрироваться">
+        </form>
+
+
+        <div class="reg-list">
+            <h2>Зарегистрированные пользователи:</h2>
+            <ul>
+                <li v-for="user in users">
+                    Имя: {{user.name}}, Фамилия: {{user.surname}}, Эл.почта: {{user.mail}}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <script>
+
+        Vue.createApp({
+            data: () => ({
+                users: [],
+                user: {
+                    name: "",
+                    surname: "",
+                    mail: "",
+                    passw: ""
+                },
+                confirm: ""
+            }),
+
+            methods: {
+                registerUser() {
+                    if (this.user.passw !== this.confirm) {
+                        alert("Пароли не совпадают");
+                        return;
+                    }
+
+                    this.users.push({ ...this.user });
+
+                    this.user.name = '';
+                    this.user.surname = '';
+                    this.user.mail = '';
+                    this.user.passw = '';
+                    this.confirm = '';
+                }
+            }
+        }).mount("#reg")
+
+    </script>
+</body>
+
+
+
+</html>
