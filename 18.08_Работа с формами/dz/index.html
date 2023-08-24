@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root">
+
+        <div class="header">
+            <h1>Лента постов</h1>
+            <textarea v-model="newPostText" rows="10" cols="60" placeholder="Поделитесь новостью">Ваш пост</textarea>
+            <button v-on:click="addTask">Опубликовать</button>
+        </div>
+
+
+        <div class="lenta">
+            <div class="post" v-for="(post, index) in postList" :key="index">
+
+
+                <textarea :style="postStyles(post)" v-model="post.text"
+                    @input="updateText(index, post.text)"></textarea>
+                <div class="options">
+                    <label>Цвет текста: <input type="color" v-model="post.textColor"></label><label>Цвет фона: <input
+                            type="color" v-model="post.bgColor"></label><br>
+
+                    <label>Семейство шрифтов: <input type="text" v-model="post.fontFamily"></label>
+                    <label>Размер шрифта: <input type="number" v-model="post.fontSize"></label><br>
+
+                    <label>Курсив: <input type="checkbox" v-model="post.isItalic"></label><label>Жирный: <input
+                            type="checkbox" v-model="post.isBold"></label>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    newPostText: "",
+                    postList: [],
+                };
+            },
+            methods: {
+                addTask() {
+                    if (this.newPostText !== "") {
+                        this.postList.push({
+                            text: this.newPostText,
+                            textColor: "black",
+                            bgColor: "white",
+                            fontFamily: "Arial, sans-serif",
+                            fontSize: 16,
+                            isItalic: false,
+                            isBold: false
+                        });
+                        this.newPostText = "";
+                    }
+                },
+                updateText(index, newText) {
+                    this.postList[index].text = newText;
+                },
+                postStyles(post) {
+                    return {
+                        color: post.textColor,
+                        background: post.bgColor,
+                        fontFamily: post.fontFamily,
+                        fontSize: post.fontSize + 'px',
+                        fontStyle: post.isItalic ? 'italic' : 'normal',
+                        fontWeight: post.isBold ? 'bold' : 'normal'
+                    }
+                }
+            },
+        }).mount("#root")
+    </script>
+
+</body>
+
+
+
+</html>

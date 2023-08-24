@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>Регистрация</h1>
+        <form @submit.prevent="register">
+            <input type="text" id="first-name" v-model="firstName" required placeholder="Name">
+            <input type="text" id="last-name" v-model="lastName" required placeholder="Lastname">
+            <input type="date" id="birthdate" v-model="birthdate" required placeholder="Birthdate">
+            <input type="email" id="email" v-model="email" required placeholder="E-mail">
+            <button :disabled="!isValid" type="submit">Зарегестрироваться</button>
+        </form>
+
+        <table v-if="isRegistered">
+            <tr>
+                <th>name</th>
+                <th>lastname</th>
+                <th>birthdate</th>
+                <th>email</th>
+            </tr>
+            <tr>
+                <td>{{ regData.firstName }}</td>
+                <td>{{ regData.lastName }}</td>
+                <td>{{ regData.birthdate }}</td>
+                <td>{{ regData.email }}</td>
+            </tr>
+        </table>
+    </div>
+
+
+
+    <script>
+
+        Vue.createApp({
+            data: () => {
+                return {
+                    firstName: "",
+                    lastName: "",
+                    birthdate: "",
+                    email: "",
+                    isRegistered: false,
+                    regData: {},
+                }
+            },
+            computed: {
+                isValid() {
+                    const currentDate = new Date();
+                    const userBirthdate = new Date(this.birthdate);
+                    const age = currentDate.getFullYear() - userBirthdate.getFullYear();
+                    return (
+                        age >= 18
+                    );
+                }
+            },
+            methods: {
+                register() {
+                    if (this.isValid) {
+                        this.isRegistered = true;
+                        this.regData = {
+                            firstName: this.firstName,
+                            lastName: this.lastName,
+                            birthdate: this.birthdate,
+                            email: this.email
+                        }
+                    }
+                }
+            },
+
+        }).mount("#root")
+
+    </script>
+</body>
+
+
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root">
+
+        <div class="header">
+            <h1>Список дел</h1>
+            <input type="text" id="taskInput" placeholder="Новая задача">
+            <button id="addTask" v-on:click="addTask">Добавить</button>
+        </div>
+
+
+        <ol class="list">
+            <li v-for="task in toDolist">
+                {{task.title}}
+                <input type="checkbox" v-model="task.done" @click="toggleTaskStatus(task)">
+            </li>
+        </ol>
+
+    </div>
+
+    <script>
+
+        Vue.createApp({
+            data: () => {
+                return {
+                    toDolist: [],
+
+                }
+            },
+            methods: {
+                addTask() {
+                    const taskText = document.getElementById('taskInput').value;
+
+                    if (taskText !== '') {
+                        this.toDolist.push({
+                            title: taskText,
+                            done: false
+                        });
+                        document.getElementById('taskInput').value = '';
+                    }
+                },
+                toggleTaskStatus(task) {
+                    task.done = !task.done;
+                }
+            },
+
+        }).mount("#root")
+
+    </script>
+</body>
+
+
+
+</html>
