@@ -1,0 +1,29 @@
+body {margin: 0 auto;
+    background-color: grey;
+}
+
+#root {
+    flex-direction: column;
+    display: flex;
+    width: 1100px;
+    margin: 0 auto;
+    background-color: grey;
+}
+
+#root img {
+    margin: 0 auto;
+    width: 500px;
+    height: 400px;
+    padding: 20px;
+    border-radius: 60px;
+}
+
+button {
+    width: 100px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+h2{
+    margin: 0 auto;
+}

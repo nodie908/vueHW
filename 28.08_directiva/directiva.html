@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root">
+        <img :src="currentImage">
+        <button @click="changeImage">Следующая картинка</button>
+        <button @click="changeRandomImage">Случайная картинка</button>
+        <img :src="currentImage2">
+        <h2>Изображение обнавляется каждые 3 сек.</h2>
+    </div>
+</body>
+
+<script>
+
+    Vue.createApp({
+        data() {
+            return {
+                imageArray: [
+                    'https://www.wallpapers4u.org/wp-content/uploads/flowers_mountains_glade_top_5722_1920x1080.jpg',
+                    'https://img2.akspic.ru/attachments/crops/1/5/0/3/0/103051/103051-peyzash-ekosistema-nebo-prirodnyjzapovednik-pejzazhigor-1920x1080.jpg',
+                    'https://res.allmacwallpaper.com/get/iMac-21-inch-wallpapers/calm-body-of-water-surrounded-by-trees-near-cliff-1920x1080/20506-9.jpg',
+                    'https://images.hdqwalls.com/download/stormy-sunrise-at-glacier-national-park-8k-iy-1920x1080.jpg',
+                    'http://trueimages.ru/img/af/94/743a6e1895bdea606b6b96f9860.jpg',
+                    'https://ticketon.kz/files/media/19287u52887_odnodnevnyi-kolsay43.jpg',
+                    'https://www.tapeciarnia.pl/tapety/normalne/tapeta-gory-alatau-dzungarski-w-kazachstanie.jpg',
+                    
+                ],
+                currentIndex: 0,
+                currentIndex2: 0
+            }
+        },
+        computed: {
+            currentImage() {
+                return this.imageArray[this.currentIndex]
+            },
+
+            currentImage2() {
+                return this.imageArray[this.currentIndex2]
+            },
+
+        },
+        methods: {
+            changeImage() {
+                this.currentIndex = (this.currentIndex + 1) % this.imageArray.length;
+            },
+
+            changeRandomImage() {
+                this.currentIndex = Math.floor(Math.random() * this.imageArray.length);
+            },
+
+            changeRandomImage2() {
+                this.currentIndex2 = Math.floor(Math.random() * this.imageArray.length);
+            }
+
+        },
+        created() {
+            setInterval(() => {
+                this.currentIndex2 = (this.currentIndex2 + 1) % this.imageArray.length;
+            }, 3000);
+        }
+
+    }).mount('#root')
+
+</script>
+
+</html>
